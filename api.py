@@ -102,5 +102,8 @@ async def get_forecast_bulletin():
         raise HTTPException(status_code=500, detail=str(e))
 
 
+import os
+
 if __name__ == "__main__":
-    uvicorn.run(app, port=3013)
+    port = int(os.environ.get("PORT", 3013))
+    uvicorn.run(app, host="0.0.0.0", port=port)
