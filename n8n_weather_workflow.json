@@ -73,7 +73,7 @@
     },
     {
       "parameters": {
-        "url": "http://localhost:8000/api/current",
+        "url": "http://localhost:3012/api/current",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
@@ -95,7 +95,7 @@
     },
     {
       "parameters": {
-        "url": "http://localhost:8000/api/today",
+        "url": "http://localhost:3012/api/today",
         "options": {
           "timeout": 15000
         }
@@ -108,7 +108,7 @@
     },
     {
       "parameters": {
-        "url": "http://localhost:8000/api/tomorrow",
+        "url": "http://localhost:3012/api/tomorrow",
         "options": {
           "timeout": 15000
         }
@@ -121,7 +121,7 @@
     },
     {
       "parameters": {
-        "url": "http://localhost:8000/api/week",
+        "url": "http://localhost:3012/api/week",
         "options": {
           "timeout": 15000
         }
@@ -134,7 +134,7 @@
     },
     {
       "parameters": {
-        "url": "http://localhost:8000/api/bulletin",
+        "url": "http://localhost:3012/api/bulletin",
         "options": {
           "timeout": 15000
         }
