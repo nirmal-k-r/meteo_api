@@ -1,0 +1,330 @@
+{
+  "name": "Mauritius Weather API",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "weather/current",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-current",
+      "name": "Webhook - Current Weather",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 200],
+      "webhookId": "weather-current"
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "weather/today",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-today",
+      "name": "Webhook - Today",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 400],
+      "webhookId": "weather-today"
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "weather/tomorrow",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-tomorrow",
+      "name": "Webhook - Tomorrow",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 600],
+      "webhookId": "weather-tomorrow"
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "weather/week",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-week",
+      "name": "Webhook - Week Forecast",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 800],
+      "webhookId": "weather-week"
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "weather/bulletin",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-bulletin",
+      "name": "Webhook - Bulletin",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 1000],
+      "webhookId": "weather-bulletin"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/api/current",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "location",
+              "value": "={{ $json.query?.location || 'Vacoas' }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "http-current",
+      "name": "Fetch Current Weather",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [500, 200]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/api/today",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "http-today",
+      "name": "Fetch Today",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [500, 400]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/api/tomorrow",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "http-tomorrow",
+      "name": "Fetch Tomorrow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [500, 600]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/api/week",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "http-week",
+      "name": "Fetch Week",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [500, 800]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/api/bulletin",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "http-bulletin",
+      "name": "Fetch Bulletin",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [500, 1000]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "respond-current",
+      "name": "Respond Current",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [800, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "respond-today",
+      "name": "Respond Today",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [800, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "respond-tomorrow",
+      "name": "Respond Tomorrow",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [800, 600]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "respond-week",
+      "name": "Respond Week",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [800, 800]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "respond-bulletin",
+      "name": "Respond Bulletin",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [800, 1000]
+    }
+  ],
+  "connections": {
+    "Webhook - Current Weather": {
+      "main": [
+        [
+          {
+            "node": "Fetch Current Weather",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Today": {
+      "main": [
+        [
+          {
+            "node": "Fetch Today",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Tomorrow": {
+      "main": [
+        [
+          {
+            "node": "Fetch Tomorrow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Week Forecast": {
+      "main": [
+        [
+          {
+            "node": "Fetch Week",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Bulletin": {
+      "main": [
+        [
+          {
+            "node": "Fetch Bulletin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Current Weather": {
+      "main": [
+        [
+          {
+            "node": "Respond Current",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Today": {
+      "main": [
+        [
+          {
+            "node": "Respond Today",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Tomorrow": {
+      "main": [
+        [
+          {
+            "node": "Respond Tomorrow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Week": {
+      "main": [
+        [
+          {
+            "node": "Respond Week",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Bulletin": {
+      "main": [
+        [
+          {
+            "node": "Respond Bulletin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "name": "weather",
+      "id": "weather-tag"
+    }
+  ]
+}
